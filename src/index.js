@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 import axios from "axios"
+import TodoItem from "./todoItem"
 
 import "./styles.css"
 
@@ -43,21 +44,17 @@ class App extends Component {
       .then(res => {
         this.setState({
           todos: [...this.state.todos, res.data],
-          todo: ""
+          todo: "",
         })
       })
-      .catch(err => console.error("handleSubmit Error: " ))
+      .catch(err => console.error("handleSubmit Error: ", err ))
     //setState with new item
     
   }
 
   renderTodos = () => {
     return this.state.todos.map(todo => {
-      return (
-        <div key={todo.id} className="todo-item">
-          <h1>{todo.title}</h1>
-        </div>
-      )
+      return <TodoItem key={todo.id} {...todo}/>
     })
   }
 
