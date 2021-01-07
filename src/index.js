@@ -74,7 +74,7 @@ class App extends Component {
   render() {
     return (
       <div className="app">
-        <h1>Hello from app</h1>
+        <h1>ToDo List</h1>
         <form className="add-todo" onSubmit={this.handleSubmit}>
           <input
           type="text"
