@@ -34,13 +34,27 @@ class App extends Component {
 
   handleSubmit = e => {
     e.preventDefault()
-    console.log("submitted")
+    //Post to API
+    axios
+      .post("http://bgb-todo-api.herokuapp.com/todo", {
+        title: this.state.todo,
+        done: false
+      })
+      .then(res => {
+        this.setState({
+          todos: [...this.state.todos, res.data],
+          todo: ""
+        })
+      })
+      .catch(err => console.error("handleSubmit Error: " ))
+    //setState with new item
+    
   }
 
   renderTodos = () => {
     return this.state.todos.map(todo => {
       return (
-        <div>
+        <div key={todo.id} className="todo-item">
           <h1>{todo.title}</h1>
         </div>
       )
@@ -49,7 +63,7 @@ class App extends Component {
 
   render() {
     return (
-      <div>
+      <div className="app">
         <h1>Hello from app</h1>
         <form className="add-todo" onSubmit={this.handleSubmit}>
           <input
@@ -61,7 +75,7 @@ class App extends Component {
           <button type="submit">Add</button>
         </form>
 
-        {this.renderTodos}
+        {this.renderTodos()}
       </div>
     )
   }
