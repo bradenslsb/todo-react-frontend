@@ -52,9 +52,22 @@ class App extends Component {
     
   }
 
+  deleteTodo = id => {
+    axios
+      .delete(`http://bgb-todo-api.herokuapp.com/todo/${id}`)
+      .then(() => {
+        this.setState({
+          todos: this.state.todos.filter(todo => {
+            return todo.id !== id
+          })
+        })
+      })
+      .catch(err => console.error("deleteTodo Error: ", err))
+  }
+
   renderTodos = () => {
     return this.state.todos.map(todo => {
-      return <TodoItem key={todo.id} {...todo}/>
+      return <TodoItem key={todo.id} {...todo} deleteTodo={this.deleteTodo}/>
     })
   }
 
